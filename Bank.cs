@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace Bank {
     class Bank {
 
-        public string Name { get; private set; }
-        public string Company { get; private set; }
-        public Dictionary<ushort, Account> accounts = new Dictionary<ushort, Account>();     //<-can be public because i will introduce passwords
+        public string Name { get; }
+        public string Company { get; }
+        Dictionary<ushort, Account> accounts = new Dictionary<ushort, Account>();
 
 
         //  constructor
@@ -27,8 +27,19 @@ namespace Bank {
         }
         //  actions
         public void CreateAccount(string owner, string password, double startBalance) {
-            
-            Account account = new Account(owner, password, startBalance, this);
+            ushort id = GetNewRandomID();
+            Account account = new Account(owner, password, startBalance, this, id);
+            accounts.Add(id, account);
+        }
+
+        ushort GetNewRandomID() {
+            Random random = new Random();
+
+            ushort randomID;
+            do {
+                randomID = (ushort)random.Next(ushort.MinValue, ushort.MaxValue);
+            } while(accounts.ContainsKey(randomID) ? true : false);                                                  //<- produces infinit loop when all ushorts are asigned and the entire program will crash (this program will probably fail at another point before this happens, so idc)
+            return randomID;
         }
 
         public Account GetAccount(ushort id, string password) {

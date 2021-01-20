@@ -10,26 +10,16 @@ namespace Bank {
         Bank bank;
 
         //  constructor
-        public Account(string owner, string password, double startBalance, Bank sender) {
+        public Account(string owner, string password, double startBalance, Bank sender, ushort id) {
             bank = sender;
-            ID = GetNewRandomID();
+            ID = id;
             this.password = password;
             Owner = owner;
             Balance = startBalance;
 
-            bank.accounts.Add(ID, this);
             Console.WriteLine($"Created account at the bank '{bank.Name}'! [{GetInfo()}]");
         }
 
-        ushort GetNewRandomID() {
-            Random random = new Random();
-
-            ushort randomID;
-            do {
-                randomID = (ushort) random.Next(ushort.MinValue, ushort.MaxValue);
-            } while (bank.accounts.ContainsKey(randomID) ? true : false);                                                  //<- produces infinit loop when all ushorts are asigned and the entire program will crash (this program will probably fail at another point before this happens, so idc)
-            return randomID;
-        }
         //  info
         public string GetInfo() => $"id:'{ID}', owner:'{Owner}', balance:'{Balance}'";
         //  actions
