@@ -4,23 +4,19 @@ using System.Collections.Generic;
 namespace Bank {
     class Bank {
 
-        string name;
-        string company;
+        public string Name { get; private set; }
+        public string Company { get; private set; }
         public Dictionary<ushort, Account> accounts = new Dictionary<ushort, Account>();     //<-can be public because i will introduce passwords
 
 
         //  constructor
         public Bank(string name, string company) {
-            this.name = name;
-            this.company = company;
+            Name = name;
+            Company = company;
             Console.WriteLine($"Created a bank! [{GetInfo()}]");
         }
         // info
-        public string GetInfo() => $"name:'{name}', company:'{company}'";
-
-        public string GetName() => name;
-
-        public string GetCompany() => company;
+        public string GetInfo() => $"name:'{Name}', company:'{Company}'";
 
         public string GetAccounts() {
             string allAccounts = "All registered accounts: ";
@@ -37,8 +33,10 @@ namespace Bank {
 
         public Account GetAccount(ushort id, string password) {
             accounts.TryGetValue(id, out Account account);
-            if(account == null)
+            if(account == null) {
                 Console.WriteLine("Unknown ID!");
+                return null;
+            }
             if(!account.CheckPassword(password)) {
                 Console.WriteLine("Wrong password!");
                 return null;

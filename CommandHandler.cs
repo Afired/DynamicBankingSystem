@@ -63,12 +63,12 @@ namespace Bank {
 
             new Tuple<string[], Action>(new string[] { namePattern, "^getName$"}, () => {
                 if(Program.GetBank(parameters[0]) != null)
-                    Console.WriteLine(Program.GetBank(parameters[0]).GetName());
+                    Console.WriteLine(Program.GetBank(parameters[0]).Name);
             }),
 
             new Tuple<string[], Action>(new string[] { namePattern, "^getCompany$"}, () => {
                 if(Program.GetBank(parameters[0]) != null)
-                    Console.WriteLine(Program.GetBank(parameters[0]).GetCompany());
+                    Console.WriteLine(Program.GetBank(parameters[0]).Company);
             }),
 
             new Tuple<string[], Action>(new string[] { namePattern, "^getAccounts$"}, () => {
@@ -100,19 +100,19 @@ namespace Bank {
             new Tuple<string[], Action>(new string[] { namePattern, idPattern, passwordPattern, "^getID$" }, () => {
                 if(Program.GetBank(parameters[0]) != null)
                     if(Program.GetBank(parameters[0]).GetAccount(ushort.Parse(parameters[1]), parameters[2]) != null)
-                        Console.WriteLine(Program.GetBank(parameters[0]).GetAccount(ushort.Parse(parameters[1]), parameters[2]).GetID());
+                        Console.WriteLine(Program.GetBank(parameters[0]).GetAccount(ushort.Parse(parameters[1]), parameters[2]).Owner);
             }),
 
             new Tuple<string[], Action>(new string[] { namePattern, idPattern, passwordPattern, "^getOwner$" }, () => {
                 if(Program.GetBank(parameters[0]) != null)
                     if(Program.GetBank(parameters[0]).GetAccount(ushort.Parse(parameters[1]), parameters[2]) != null)
-                        Console.WriteLine(Program.GetBank(parameters[0]).GetAccount(ushort.Parse(parameters[1]), parameters[2]).GetOwner());
+                        Console.WriteLine(Program.GetBank(parameters[0]).GetAccount(ushort.Parse(parameters[1]), parameters[2]).Owner);
             }),
 
             new Tuple<string[], Action>(new string[] { namePattern, idPattern, passwordPattern, "^getBalance$" }, () => {
                 if(Program.GetBank(parameters[0]) != null)
                     if(Program.GetBank(parameters[0]).GetAccount(ushort.Parse(parameters[1]), parameters[2]) != null)
-                        Console.WriteLine(Program.GetBank(parameters[0]).GetAccount(ushort.Parse(parameters[1]), parameters[2]).GetBalance());
+                        Console.WriteLine(Program.GetBank(parameters[0]).GetAccount(ushort.Parse(parameters[1]), parameters[2]).Balance);
             }),
 
             new Tuple<string[], Action>(new string[] { namePattern, idPattern, passwordPattern, "^addBalance$", uDoublePattern}, () => {

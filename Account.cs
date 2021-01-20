@@ -4,59 +4,53 @@ namespace Bank {
     class Account {
 
         string password;
-        ushort id;
-        string owner;
-        double balance = 0;
+        public ushort ID { get; }
+        public string Owner { get; }
+        public double Balance { get; private set; } = 0;
         Bank bank;
 
         //  constructor
         public Account(string owner, string password, double startBalance, Bank sender) {
             bank = sender;
-            AsignRandomID();
+            ID = GetNewRandomID();
             this.password = password;
-            this.owner = owner;
-            balance = startBalance;
+            Owner = owner;
+            Balance = startBalance;
 
-            bank.accounts.Add(id, this);
-            Console.WriteLine($"Created account at the bank '{bank.GetName()}'! [{GetInfo()}]");
+            bank.accounts.Add(ID, this);
+            Console.WriteLine($"Created account at the bank '{bank.Name}'! [{GetInfo()}]");
         }
 
-        void AsignRandomID() {
+        ushort GetNewRandomID() {
             Random random = new Random();
 
             ushort randomID;
             do {
                 randomID = (ushort) random.Next(ushort.MinValue, ushort.MaxValue);
             } while (bank.accounts.ContainsKey(randomID) ? true : false);                                                  //<- produces infinit loop when all ushorts are asigned and the entire program will crash (this program will probably fail at another point before this happens, so idc)
-            id = randomID;
+            return randomID;
         }
         //  info
-        public string GetInfo() => $"id:'{id}', owner:'{owner}', balance:'{balance}'";
-
-        public ushort GetID() => id;
-
-        public double GetBalance() => balance;
-
-        public string GetOwner() => owner;
+        public string GetInfo() => $"id:'{ID}', owner:'{Owner}', balance:'{Balance}'";
         //  actions
         public void AddBalance(double amount) {
-            balance += amount;
-            Console.WriteLine($"Added {amount} to the account! New balance: '{GetBalance()}'");
+            Balance += amount;
+            Console.WriteLine($"Added {amount} to the account! New balance: '{Balance}'");
         }
 
         public void RemoveBalance(double amount) {
-            balance -= amount;
-            Console.WriteLine($"Removed {amount} from the account! New balance: '{GetBalance()}'");
+            Balance -= amount;
+            Console.WriteLine($"Removed {amount} from the account! New balance: '{Balance}'");
         }
 
         public void ClearBalance() {
-            Console.WriteLine($"Cleared balance from the account! Removed: '{GetBalance()}'");
-            balance = 0;
+            Console.WriteLine($"Cleared balance from the account! Removed: '{Balance}'");
+            Balance = 0;
         }
 
         public double PayInterest(double factor) {
-            double addBalance = balance * (factor - 1);
-            balance += addBalance;
+            double addBalance = Balance * (factor - 1);
+            Balance += addBalance;
             return addBalance;
         }
 
